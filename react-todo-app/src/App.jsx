@@ -3,12 +3,10 @@ import "./App.css";
 
 function App() {
   // useEffect(() => {}, []);
-
-  return (
-    <>
-      <div className="app-container">
-        <h1>TODO APP</h1>
-        <br />
+  function TodoInput() {
+    return (
+      <>
+        {" "}
         <input
           className="todo-input"
           type="text"
@@ -18,26 +16,34 @@ function App() {
         <button onClick={() => {}} className="save-btn">
           Save
         </button>
-        <br />
-
-        <br />
+      </>
+    );
+  }
+  function DisplayTodo() {
+    return (
+      <>
         <div className="todos-container">
           <div className="todo">
-            I will study for 8 hours today{" "}
-            <div className="delete-btn">
-              <button>Delete</button>
-            </div>
-          </div>
-          <div className="todo">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-            laudantium itaque quisquam rerum nisi suscipit mollitia, dolores
-            enim sit officia tempore cupiditate, hic dolor quos facilis
-            quibusdam asperiores nulla voluptatem.
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Hic
+            obcaecati quisquam atque eos voluptatum! Porro consequuntur at illum
+            animi. Doloremque impedit saepe nisi et! Voluptates autem nulla
+            mollitia laboriosam culpa.
             <div className="delete-btn">
               <button>Delete</button>
             </div>
           </div>
         </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div className="app-container">
+        <h1>TODO APP</h1>
+        <br />
+        <TodoInput />
+        <DisplayTodo />
       </div>
     </>
   );
