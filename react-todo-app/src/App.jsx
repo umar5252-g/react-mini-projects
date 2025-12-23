@@ -1,8 +1,6 @@
 // import { useEffect, useState } from "react";
+import "./App.css";
 
-function DiplayTodo() {
-  return <></>;
-}
 function App() {
   // useEffect(() => {}, []);
 
@@ -14,15 +12,31 @@ function App() {
         <input
           className="todo-input"
           type="text"
-          placeholder="enter yout todo here "
+          placeholder="Enter your todo here"
           onChange={() => {}}
         />
-        <button onClick={() => {}}>Save</button>
-        <button>Delete</button>
+        <button onClick={() => {}} className="save-btn">
+          Save
+        </button>
         <br />
-        <div className="todo's-container">
-          <div className="todo">I will study for 8 hours today </div>
-          <div className="todo">i will solve 8 question of dsa today</div>
+
+        <br />
+        <div className="todos-container">
+          <div className="todo">
+            I will study for 8 hours today{" "}
+            <div className="delete-btn">
+              <button>Delete</button>
+            </div>
+          </div>
+          <div className="todo">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
+            laudantium itaque quisquam rerum nisi suscipit mollitia, dolores
+            enim sit officia tempore cupiditate, hic dolor quos facilis
+            quibusdam asperiores nulla voluptatem.
+            <div className="delete-btn">
+              <button>Delete</button>
+            </div>
+          </div>
         </div>
       </div>
     </>
