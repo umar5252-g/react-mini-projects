@@ -14,11 +14,11 @@ body {
 
 .app-container {
   background-color: white;
-
+  border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 700px;
+  max-width: 500px;
 }
 
 h1 {
@@ -90,33 +90,9 @@ h1 {
   font-size: 0.9rem;
   font-weight: 600;
   transition: background-color 0.3s;
+  white-space: nowrap;
 }
 
 .delete-btn button:hover {
   background-color: #ff5252;
-}
-
-.todo-text.completed {
-  text-decoration: line-through;
-  color: #777;
-  opacity: 0.85;
-}
-
-.edit-input {
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.edit-btn {
-  padding: 0.4rem 0.7rem;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.edit-btn:hover {
-  opacity: 0.95;
 }
