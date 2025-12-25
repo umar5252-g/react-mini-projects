@@ -6,7 +6,9 @@ function App() {
   const [toggle, setToggle] = useState(true);
 
   return (
-    <div className="app-container">
+    <div
+      className={toggle === true ? "app-container light" : "app-container dark"}
+    >
       <h1>Count + Theme Toggle App</h1>
       <br />
       <div className="count-container">
@@ -20,11 +22,8 @@ function App() {
       </div>
       <br />
       <div className="toggle-container">
-        <button
-          className={toggle === true ? `light` : "dark"}
-          onClick={() => setToggle(!toggle)}
-        >
-          Toggle
+        <button onClick={() => setToggle(!toggle)}>
+          {toggle === true ? "Switch to Dark" : "Switch to Light"}
         </button>
       </div>
     </div>
