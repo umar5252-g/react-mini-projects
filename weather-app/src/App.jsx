@@ -7,20 +7,25 @@ function App() {
   const [city, setCity] = useState("peshawar");
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(false);
+  const [error, setError] = useState("");
+
   // let url = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&appid=${apiKey}&units=metric`;
   useEffect(() => {
     if (!city) return;
     const fetchData = async () => {
+      setloading(true);
+      setError("");
+      setData(null);
       try {
-        setloading(true);
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=016de935b9164dc30cf79bc99d3cff55&units=metric`
         );
         setData(response.data);
-        setloading(false);
       } catch (error) {
+        setError("City not found or API error.");
         console.log("Error while fetching the data", error);
       }
+      setloading(false);
     };
     fetchData();
   }, [city]);
@@ -46,22 +51,27 @@ function App() {
           Search
         </button>
       </div>
-      <div className="loading">{loading && <p>loading...</p>}</div>
-      <div className="weather-infor">
-        <div className="temperature">
-          {" "}
-          Temperature : {data && data.main.temp}
+      {loading && <p className="loading-message">loading...</p>}
+      {error && <p className="error-message">{error}</p>}
+      {!loading && data && !error && (
+        <div className="weather-infor">
+          <div className="temperature">
+            {" "}
+            Temperature : {data && data.main.temp}
+          </div>
+          <div className="icon">
+            <img
+              src={`https://openweathermap.org/img/wn/${
+                data && data.weather[0].icon
+              }@2x.png`}
+              alt="weather icon"
+            />
+          </div>
+          <div className="humidity">
+            Humidity : {data && data.main.humidity}
+          </div>
         </div>
-        <div className="icon">
-          <img
-            src={`https://openweathermap.org/img/wn/${
-              data && data.weather[0].icon
-            }@2x.png`}
-            alt="weather icon"
-          />
-        </div>
-        <div className="humidity">Humidity : {data && data.main.humidity}</div>
-      </div>
+      )}
     </div>
   );
 }

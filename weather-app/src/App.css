@@ -53,3 +53,12 @@ button:hover {
   width: 100px;
   height: 100px;
 }
+
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+.loading-message {
+  font-weight: bold;
+  font-size: 30px;
+}
