@@ -6,15 +6,18 @@ function App() {
   const [input, setInput] = useState("");
   const [city, setCity] = useState("peshawar");
   const [data, setData] = useState(null);
+  const [loading, setloading] = useState(false);
   // let url = `https://api.openweathermap.org/data/2.5/weather?q=Karachi&appid=${apiKey}&units=metric`;
   useEffect(() => {
     if (!city) return;
     const fetchData = async () => {
       try {
+        setloading(true);
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=016de935b9164dc30cf79bc99d3cff55&units=metric`
         );
         setData(response.data);
+        setloading(false);
       } catch (error) {
         console.log("Error while fetching the data", error);
       }
@@ -43,6 +46,7 @@ function App() {
           Search
         </button>
       </div>
+      <div className="loading">{loading && <p>loading...</p>}</div>
       <div className="weather-infor">
         <div className="temperature">
           {" "}
