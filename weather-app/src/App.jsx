@@ -23,7 +23,7 @@ function App() {
   }, [city]);
 
   return (
-    <div className="app-containers">
+    <div className="app-container">
       <h1>Weather App</h1>
       <div className="input-container">
         <input
