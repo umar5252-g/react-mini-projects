@@ -5,7 +5,11 @@ import "./App.css";
 function TodoInput({ todos, setTodos }) {
   const [todoInput, setTodoInput] = useState("");
   const addTodo = () => {
-    const newTodo = todoInput;
+    const newTodo = {
+      id: crypto.randomUUID(),
+      text: todoInput,
+      completed: false,
+    };
     setTodos([...todos, newTodo]);
     setTodoInput("");
   };
@@ -22,7 +26,7 @@ function TodoInput({ todos, setTodos }) {
         }}
         onKeyDown={(e) => {
           if (e.key === "Enter") {
-            addTodo();
+            todoInput && addTodo();
           }
         }}
       />
