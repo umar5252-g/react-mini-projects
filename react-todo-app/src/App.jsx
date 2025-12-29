@@ -38,18 +38,17 @@ function DisplayTodo({ todos, setTodos }) {
   const [editedText, setEditText] = useState("");
   return (
     <div className="todos-container">
-      {todos.map((todo, idx) => {
+      {todos.map((todo) => {
         return (
-          <div key={idx} className="todo">
-            {todo}
+          <div key={todo.id} className="todo">
+            {todo.text}
             <div className="edit-btn">
               <button>Edit</button>
             </div>
             <div className="delete-btn">
               <button
                 onClick={() => {
-                  const deleteIdx = idx;
-                  const newTodo = todos.filter((todo, i) => i !== deleteIdx);
+                  const newTodo = todos.filter((t) => t.id !== todo.id);
                   setTodos(newTodo);
                 }}
               >
@@ -63,7 +62,18 @@ function DisplayTodo({ todos, setTodos }) {
   );
 }
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      text: "Complete homeWork",
+      completed: false,
+    },
+    {
+      id: 2,
+      text: "Buy milk",
+      completed: false,
+    },
+  ]);
 
   return (
     <>
