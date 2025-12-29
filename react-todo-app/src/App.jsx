@@ -4,6 +4,11 @@ import "./App.css";
 
 function TodoInput({ todos, setTodos }) {
   const [todoInput, setTodoInput] = useState("");
+  const addTodo = () => {
+    const newTodo = todoInput;
+    setTodos([...todos, newTodo]);
+    setTodoInput("");
+  };
   return (
     <>
       {" "}
@@ -15,15 +20,13 @@ function TodoInput({ todos, setTodos }) {
         onChange={(event) => {
           setTodoInput(event.target.value);
         }}
-      />
-      <button
-        onClick={() => {
-          const newTodo = todoInput;
-          setTodos([...todos, newTodo]);
-          setTodoInput("");
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            addTodo();
+          }
         }}
-        className="save-btn"
-      >
+      />
+      <button onClick={addTodo} className="save-btn">
         Save
       </button>
     </>
@@ -31,6 +34,8 @@ function TodoInput({ todos, setTodos }) {
 }
 
 function DisplayTodo({ todos, setTodos }) {
+  const [editId, setEditId] = useState(null);
+  const [editedText, setEditText] = useState("");
   return (
     <div className="todos-container">
       {todos.map((todo, idx) => {
