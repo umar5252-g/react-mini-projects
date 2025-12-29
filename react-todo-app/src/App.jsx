@@ -2,17 +2,9 @@
 import { useState } from "react";
 import "./App.css";
 
-function TodoInput({ todos, setTodos }) {
+function TodoInput({ addTodo }) {
   const [todoInput, setTodoInput] = useState("");
-  const addTodo = () => {
-    const newTodo = {
-      id: crypto.randomUUID(),
-      text: todoInput,
-      completed: false,
-    };
-    setTodos([...todos, newTodo]);
-    setTodoInput("");
-  };
+
   return (
     <>
       {" "}
@@ -25,19 +17,27 @@ function TodoInput({ todos, setTodos }) {
           setTodoInput(event.target.value);
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            todoInput && addTodo();
+          if (e.key === "Enter" && todoInput.trim()) {
+            addTodo(todoInput);
+            setTodoInput("");
           }
         }}
       />
-      <button onClick={addTodo} className="save-btn">
+      <button
+        onClick={() => {
+          if (!todoInput.trim()) return;
+          addTodo(todoInput);
+          setTodoInput("");
+        }}
+        className="save-btn"
+      >
         Save
       </button>
     </>
   );
 }
 
-function DisplayTodo({ todos, setTodos }) {
+function DisplayTodo({ todos, deleteTodo }) {
   const [editId, setEditId] = useState(null);
   const [editedText, setEditText] = useState("");
   return (
@@ -52,8 +52,7 @@ function DisplayTodo({ todos, setTodos }) {
             <div className="delete-btn">
               <button
                 onClick={() => {
-                  const newTodo = todos.filter((t) => t.id !== todo.id);
-                  setTodos(newTodo);
+                  deleteTodo(todo.id);
                 }}
               >
                 Delete
@@ -78,14 +77,26 @@ function App() {
       completed: false,
     },
   ]);
+  const addTodo = (text) => {
+    const newTodo = {
+      id: crypto.randomUUID(),
+      text,
+      completed: false,
+    };
+    setTodos([...todos, newTodo]);
+  };
+  function deleteTodo(id) {
+    const newTodo = todos.filter((t) => t.id !== id);
+    setTodos(newTodo);
+  }
 
   return (
     <>
       <div className="app-container">
         <h1>TODO APP</h1>
         <br />
-        <TodoInput todos={todos} setTodos={setTodos} />
-        <DisplayTodo todos={todos} setTodos={setTodos} />
+        <TodoInput addTodo={addTodo} />
+        <DisplayTodo todos={todos} deleteTodo={deleteTodo} />
       </div>
     </>
   );
