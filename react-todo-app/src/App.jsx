@@ -37,6 +37,9 @@ function DisplayTodo({ todos, setTodos }) {
         return (
           <div key={idx} className="todo">
             {todo}
+            <div className="edit-btn">
+              <button>Edit</button>
+            </div>
             <div className="delete-btn">
               <button
                 onClick={() => {

@@ -5,7 +5,7 @@
 }
 
 body {
-  background: gray;
+  background: white;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,7 +14,6 @@ body {
 
 .app-container {
   background-color: white;
-
   padding: 2rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
   width: 100%;
@@ -95,4 +94,20 @@ h1 {
 
 .delete-btn button:hover {
   background-color: #ff5252;
+}
+
+.edit-btn button {
+  padding: 0.3rem 0.7rem;
+  background-color: rgb(108, 122, 230);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+.edit-btn button:hover {
+  background-color: rgb(141, 187, 202);
 }
