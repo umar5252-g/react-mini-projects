@@ -111,3 +111,7 @@ h1 {
 .edit-btn button:hover {
   background-color: rgb(141, 187, 202);
 }
+
+.edit-btn-hide {
+  display: none;
+}
