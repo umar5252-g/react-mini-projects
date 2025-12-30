@@ -31,8 +31,12 @@ export function DisplayTodo({ todos, deleteTodo, setTodos }) {
                 }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
+                    if (!editedText.trim()) return;
                     saveEdit(todo.id);
-                  } else if (e.key === "Escape") setEditId(null);
+                  } else if (e.key === "Escape") {
+                    setEditId(null);
+                    setEditText("");
+                  }
                 }}
               />
             ) : (
