@@ -5,45 +5,65 @@ export function DisplayTodo({ todos, deleteTodo, setTodos }) {
   const [editedText, setEditText] = useState("");
 
   const saveEdit = (id) => {
-    const updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return { ...todo, text: editedText };
-      }
-      return todo;
-    });
+    if (!editedText.trim()) return;
+
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: editedText } : todo
+    );
 
     setTodos(updatedTodos);
     setEditId(null);
     setEditText("");
   };
 
+  const toggleComplete = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: !todo.completed } : todo
+    );
+    setTodos(updatedTodos);
+  };
+
   return (
     <div className="todos-container">
-      {todos.map((todo) => {
-        return (
-          <div key={todo.id} className="todo">
-            {editId === todo.id ? (
-              <input
-                type="text"
-                value={editedText}
-                onChange={(event) => {
-                  setEditText(event.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    if (!editedText.trim()) return;
-                    saveEdit(todo.id);
-                  } else if (e.key === "Escape") {
-                    setEditId(null);
-                    setEditText("");
-                  }
-                }}
-              />
-            ) : (
-              <span>{todo.text}</span>
-            )}
+      {todos.map((todo) => (
+        <div key={todo.id} className="todo">
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => toggleComplete(todo.id)}
+          />
 
-            <div className="edit-btn">
+          {editId === todo.id ? (
+            <input
+              className="edit-input"
+              type="text"
+              value={editedText}
+              onChange={(e) => setEditText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") saveEdit(todo.id);
+                if (e.key === "Escape") {
+                  setEditId(null);
+                  setEditText("");
+                }
+              }}
+            />
+          ) : (
+            <span
+              className="edited-message"
+              style={{
+                textDecoration: todo.completed ? "line-through" : "none",
+                opacity: todo.completed ? 0.6 : 1,
+                color: todo.completed ? "green" : "black",
+              }}
+            >
+              {todo.text}
+            </span>
+          )}
+          {/* EdIt btn */}
+          <div className="edit-btn">
+            {editId === todo.id ? (
+              <button onClick={() => saveEdit(todo.id)}>Save</button>
+            ) : (
               <button
                 onClick={() => {
                   setEditId(todo.id);
@@ -52,19 +72,15 @@ export function DisplayTodo({ todos, deleteTodo, setTodos }) {
               >
                 Edit
               </button>
-            </div>
-            <div className="delete-btn">
-              <button
-                onClick={() => {
-                  deleteTodo(todo.id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
+            )}
           </div>
-        );
-      })}
+
+          {/*  delete button  */}
+          <div className="delete-btn">
+            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
