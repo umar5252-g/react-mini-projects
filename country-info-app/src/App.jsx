@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import CountryInput from "./components/CountryInput";
 import CountryDisplay from "./components/CountryDisplay";
+import axios from "axios";
 
 function App() {
   const [country, setCountry] = useState(null);
@@ -12,22 +13,24 @@ function App() {
     setLoading(true);
     setError(null);
     setCountry(null);
+
     try {
-      const res = await fetch(
+      const response = await axios.get(
         `https://restcountries.com/v3.1/name/${encodeURIComponent(
           countryName
         )}?fullText=false`
       );
-      if (!res.ok) {
-        if (res.status === 404) throw new Error("No matching country found.");
-        throw new Error("Failed to fetch country data.");
-      }
-      const data = await res.json();
-      setCountry(data[0]);
+
+      setCountry(response.data[0]);
     } catch (err) {
-      setError(err.message || "Unknown error");
+      if (err.response?.status === 404) {
+        setError("No matching country found");
+      } else {
+        setError("Failed to fetch country data");
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (
