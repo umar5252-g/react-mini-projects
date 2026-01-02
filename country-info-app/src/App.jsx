@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import CountryInput from "./components/CountryInput";
+import CountryDisplay from "./components/CountryDisplay";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [country, setCountry] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function handleSearch(countryName) {
+    setLoading(true);
+    setError(null);
+    setCountry(null);
+    try {
+      const res = await fetch(
+        `https://restcountries.com/v3.1/name/${encodeURIComponent(
+          countryName
+        )}?fullText=false`
+      );
+      if (!res.ok) {
+        if (res.status === 404) throw new Error("No matching country found.");
+        throw new Error("Failed to fetch country data.");
+      }
+      const data = await res.json();
+      setCountry(data[0]);
+    } catch (err) {
+      setError(err.message || "Unknown error");
+    }
+    setLoading(false);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <h1>Country Info</h1>
+      <CountryInput handleSearch={handleSearch} />
+      <CountryDisplay country={country} loading={loading} error={error} />
+    </div>
+  );
 }
 
-export default App
+export default App;
